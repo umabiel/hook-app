@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Fragment } from "react";
+import { Message } from "./Message";
 
 import "./effects.css";
+
 export const SimpleForm = () => {
   const [formState, setFormState] = useState({
     name: "",
@@ -10,11 +12,11 @@ export const SimpleForm = () => {
   const { email, name } = formState;
 
   useEffect(() => {
-    console.log("Hey!");
+    // console.log("Hey!");
   }, []);
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    console.log(target.value);
+    // console.log(target.value);
     setFormState({
       ...formState,
       [target.name]: target.value,
@@ -47,6 +49,7 @@ export const SimpleForm = () => {
           onChange={handleInputChange}
         />
       </div>
+      {name === "123" && <Message />}
     </Fragment>
   );
 };

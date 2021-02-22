@@ -5,11 +5,11 @@ import "./counter.css";
 import { useCounter } from "../../hooks/useCounter";
 
 export const CounterWithCustomHookApp = () => {
-  const { state, increment, decrement, reset } = useCounter();
+  const { counter, increment, decrement, reset } = useCounter();
 
   return (
     <Fragment>
-      <h1>Counter With Hooks: {state}</h1>
+      <h1>Counter With Hooks: {counter}</h1>
       <hr />
       <button onClick={() => increment(3)} className="btn">
         +1
