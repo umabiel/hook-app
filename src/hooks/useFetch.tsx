@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Quote {
   quote: string;
@@ -12,7 +12,14 @@ interface IRequestData {
 }
 const initState: IRequestData = { data: [], loading: true, error: null };
 export const useFetch = (url: string) => {
+  const isMounted = useRef<boolean>(true);
   const [state, setState] = useState(initState);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     setState({
@@ -22,13 +29,18 @@ export const useFetch = (url: string) => {
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
-        setState({
-          loading: false,
-          error: null,
-          data,
-        });
+        if (isMounted.current) {
+          setState({
+            loading: false,
+            error: null,
+            data,
+          });
+        } else {
+          console.log("Componente no montado...");
+        }
       });
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   return state;
