@@ -1,12 +1,12 @@
-import React, { FormEvent, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 
 import { todoReducer } from "./todoReducer";
 import { Todo } from "./types";
 
 import "../../App.css";
 import "./styles.css";
-import { useForm } from "../../hooks/useForm";
 import { TodoList } from "./TodoList";
+import { TodoForm } from "./TodoForm";
 
 interface Action {
   type: string;
@@ -24,9 +24,6 @@ const init = (): Todo[] => {
 
 export const TodoApp = () => {
   const [todos, dispatch] = useReducer(todoReducer, [], init);
-
-  const { values, handleInputChange, clear } = useForm({ description: "" });
-  const { description } = values;
 
   useEffect(() => {
     localStorage.setItem("todosReactApp", JSON.stringify(todos));
@@ -48,20 +45,12 @@ export const TodoApp = () => {
     dispatch(action);
   };
 
-  const handleOnSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const newTodo: Todo = {
-      id: new Date().getTime(),
-      desc: description,
-      done: false,
-    };
+  const handleTodoAdd = (todo: Todo) => {
     const action: Action = {
       type: "add",
-      payload: newTodo,
+      payload: todo,
     };
-
     dispatch(action);
-    clear();
   };
 
   return (
@@ -77,25 +66,7 @@ export const TodoApp = () => {
           />
         </div>
         <div className="col-5">
-          <h4>Agregar ToDo</h4>
-          <hr />
-          <form onSubmit={handleOnSubmit}>
-            <input
-              type="text"
-              name="description"
-              placeholder="Hoy quiero aprender..."
-              className="form-control"
-              autoComplete="off"
-              value={description}
-              onChange={handleInputChange}
-            />
-            <button
-              className="btn btn-outline-primary mt-1 btn-block"
-              type="submit"
-            >
-              Agregar
-            </button>
-          </form>
+          <TodoForm handleTodoAdd={handleTodoAdd} />
         </div>
       </div>
     </div>
