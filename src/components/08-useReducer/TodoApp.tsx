@@ -6,6 +6,7 @@ import { Todo } from "./types";
 import "../../App.css";
 import "./styles.css";
 import { useForm } from "../../hooks/useForm";
+import { TodoList } from "./TodoList";
 
 interface Action {
   type: string;
@@ -29,9 +30,6 @@ export const TodoApp = () => {
 
   useEffect(() => {
     localStorage.setItem("todosReactApp", JSON.stringify(todos));
-    // return () => {
-    //   cleanup
-    // }
   }, [todos]);
 
   const handleDelete = (todo: Todo) => {
@@ -72,27 +70,11 @@ export const TodoApp = () => {
       <hr />
       <div className="row">
         <div className="col-7">
-          <ul className="list-group list-group-flush">
-            {todos.map((todo: Todo, idx: number) => {
-              return (
-                <li
-                  onClick={() => handleDone(todo)}
-                  className="list-group-item"
-                  key={todo.id}
-                >
-                  <p className={` ${todo.done && "complete"}`}>
-                    {idx + 1}. {todo.desc}
-                  </p>
-                  <button
-                    onClick={() => handleDelete(todo)}
-                    className="btn btn-danger"
-                  >
-                    Borrar
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          <TodoList
+            todos={todos}
+            handleDelete={handleDelete}
+            handleDone={handleDone}
+          />
         </div>
         <div className="col-5">
           <h4>Agregar ToDo</h4>
