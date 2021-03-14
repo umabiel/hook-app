@@ -1,0 +1,14 @@
+.list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+p {
+  margin: 0px;
+}
+
+.complete {
+  text-decoration: line-through;
+}

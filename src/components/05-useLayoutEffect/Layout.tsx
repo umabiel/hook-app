@@ -32,6 +32,10 @@ export const Layout = () => {
         {/* <footer className="blockquote-footer">{author}</footer> */}
       </blockquote>
 
+      <pre>
+        {JSON.stringify(pTag.current?.getBoundingClientRect(), null, 3)}
+      </pre>
+
       <button onClick={() => increment(1)} className="btn btn-primary">
         Trae otro...
       </button>

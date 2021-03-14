@@ -4,16 +4,22 @@ interface IForm {
   name?: string;
   email?: string;
   password?: string;
+  description?: string;
 }
 
 const initState: IForm = {
   email: "",
   name: "",
   password: "",
+  description: "",
 };
 
 export const useForm = (initialState = initState) => {
   const [values, setValues] = useState(initialState);
+
+  const clear = () => {
+    setValues(initialState);
+  };
 
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -22,5 +28,5 @@ export const useForm = (initialState = initState) => {
     });
   };
 
-  return { values, handleInputChange };
+  return { values, handleInputChange, clear };
 };
